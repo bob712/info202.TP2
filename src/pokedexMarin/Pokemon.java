@@ -17,27 +17,20 @@ public class Pokemon {
     private int quantiteTrouver;
     private int numero;
     private String nom;
-
-//j pense pas qu'on a besoin de ca...
-  /*  public enum TYPE {
-        mammifereMarin,
-        poisson,
-        planteAquatique,
-        mineral;
-    }*/
-
-    //private TYPE type;
+    private String couleur;
+    private int grandeur;//grandeur en cm
 
     public Pokemon() {
     }
 
-    public Pokemon(String date, String codeAccesTrouver, int quantiteTrouver, String nom /*,TYPE type*/) {
+    public Pokemon(String date, String codeAccesTrouver, int quantiteTrouver, String nom, String couleur, int grandeur) {
         this.date = date;
         this.codeAccesTrouver = codeAccesTrouver;
         this.quantiteTrouver = quantiteTrouver;
-        this.numero = this.noCreation++;
+        this.numero = Pokemon.noCreation++;
         this.nom = nom;
-       // this.type = type;
+        this.couleur = couleur;
+        this.grandeur = grandeur;
     }
 
     @Override

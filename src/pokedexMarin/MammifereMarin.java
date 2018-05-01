@@ -13,8 +13,8 @@ public class MammifereMarin extends Poisson {
 
     private ALIMENTATION alimentation;
 
-    public MammifereMarin(String date, String nomTrouver, int quantiteTrouver, String nom, /*TYPE type,*/ SEXE sexe, TYPE_EAU typeEau, String cri, ALIMENTATION alimentation) {
-        super(date, nomTrouver, quantiteTrouver, nom,/* type, */ sexe, typeEau);
+    public MammifereMarin(String date, String nomTrouver, int quantiteTrouver, String nom, String couleur, int grandeur, SEXE sexe, TYPE_EAU typeEau, String cri, ALIMENTATION alimentation) {
+        super(date, nomTrouver, quantiteTrouver, nom, couleur, grandeur, sexe, typeEau);
         this.cri = cri;
         this.alimentation = alimentation;
     }

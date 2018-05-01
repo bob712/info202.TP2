@@ -5,16 +5,18 @@
  */
 package pokedexMarin;
 
+import pokedexMarin.Poisson.TYPE_EAU;
+
 /**
  *
  * @author 1764812
  */
-public class PlanteAquatique extends Poisson {
+public class PlanteAquatique extends Pokemon {
 
     private FLOTAISON flotaison;
 
-    public PlanteAquatique(String date, String nomTrouver, int quantiteTrouver, String nom/*,TYPE type*/, SEXE sexe, TYPE_EAU typeEau, FLOTAISON flotaison) {
-        super(date, nomTrouver, quantiteTrouver, nom,/* type,*/ sexe, typeEau);
+    public PlanteAquatique(String date, String nomTrouver, int quantiteTrouver, String nom, String couleur, int grandeur, TYPE_EAU typeEau, FLOTAISON flotaison) {
+        super(date, nomTrouver, quantiteTrouver, nom, couleur, grandeur);
         this.flotaison = flotaison;
     }
 

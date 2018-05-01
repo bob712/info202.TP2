@@ -22,8 +22,8 @@ public class Poisson extends Pokemon {
     public Poisson() {
     }
 
-    public Poisson(String date, String nomTrouver, int quantiteTrouver, String nom,/*TYPE type,*/ SEXE sexe, TYPE_EAU typeEau) {
-        super(date, nomTrouver, quantiteTrouver, nom/*, type*/);
+    public Poisson(String date, String nomTrouver, int quantiteTrouver, String nom,String couleur,int grandeur, SEXE sexe, TYPE_EAU typeEau) {
+        super(date, nomTrouver, quantiteTrouver, nom, couleur, grandeur);
         this.sexe = sexe;
         this.typeEau = typeEau;
     }
@@ -33,7 +33,7 @@ public class Poisson extends Pokemon {
         FEMELLE;
     }
 
-    enum TYPE_EAU {
+    public enum TYPE_EAU {
         EAU_DOUCE,
         EAU_SALEE;
     }

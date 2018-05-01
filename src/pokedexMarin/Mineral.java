@@ -11,8 +11,8 @@ package pokedexMarin;
  */
 public class Mineral extends Pokemon {
 
-    public Mineral(String date, String nomTrouver, int quantiteTrouver, String nom/*, TYPE type*/) {
-        super(date, nomTrouver, quantiteTrouver, nom/*, type*/);
+    public Mineral(String date, String nomTrouver, int quantiteTrouver, String nom, String couleur, int grandeur) {
+        super(date, nomTrouver, quantiteTrouver, nom, couleur, grandeur);
     }
 
     Mineral() {

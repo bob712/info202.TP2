@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import pokedexMarin.MammifereMarin.ALIMENTATION;
+import pokedexMarin.PlanteAquatique.FLOTAISON;
 import pokedexMarin.Poisson.SEXE;
 import pokedexMarin.Poisson.TYPE_EAU;
 
@@ -179,24 +181,27 @@ public class Pokedex {
         String type;
         String date;
         String nom;
+        String couleur;
         int quantiteTrouve;
+        int grandeur;
         SEXE sexe;
         TYPE_EAU type_eau = null;
         boolean entreeCorrecte;
-//mettre les call des methodes direct dans les constructeurs?
         type = typeAjout();
         nom = nomAjout();
         date = dateAjout();
         quantiteTrouve = quantiteAjout();
+        couleur = couleurAjout();
+        grandeur = grandeurAjout();
         switch (type) {
             case "1":
-                pokemons.add(new Poisson(date, personnes.get(personneIndex).getNom(), quantiteTrouve, nom, sexeAjout(), type_eauAjout()));
+                pokemons.add(new Poisson(date, personnes.get(personneIndex).getCodeAcces(), quantiteTrouve, nom, couleur, grandeur, sexeAjout(), type_eauAjout()));
                 break;
             case "2":
-                pokemons.add(new MammifereMarin());
+                pokemons.add(new MammifereMarin(date, personnes.get(personneIndex).getCodeAcces(), quantiteTrouve, nom, couleur, grandeur, sexeAjout(), type_eauAjout(), criAjout(), alimentationAjout()));
                 break;
             case "3":
-                pokemons.add(new PlanteAquatique());
+                pokemons.add(new PlanteAquatique(date, personnes.get(personneIndex).getCodeAcces(), quantiteTrouve, nom, couleur, grandeur, type_eauAjout(), flotaisonAjout()));
                 break;
             case "4":
                 pokemons.add(new Mineral());
@@ -219,7 +224,7 @@ public class Pokedex {
 
     private String nomAjout() {
         System.out.println("Comment voulez-vous nommer ce spécimen?");
-        return  clavier.nextLine();
+        return clavier.nextLine();
     }
 
     private String dateAjout() {
@@ -252,6 +257,27 @@ public class Pokedex {
             }
         } while (!entreeValide);
         return quantiteTrouve;
+    }
+
+    private String couleurAjout() {
+        System.out.println("Veuillez entrer la couleur qui corresponds le mieux à la couleur du spécimen.");
+        return clavier.nextLine();
+    }
+
+    private int grandeurAjout() {
+        int grandeur = 0;
+        boolean entreeValide;
+        System.out.println("De quelle taille étaient-ils? (entrez leur taille en cm)");
+        do {
+            try {
+                grandeur = Integer.parseInt(clavier.nextLine());
+                entreeValide = true;
+            } catch (NumberFormatException nfe) {
+                System.out.println("Veuillez entrer un nombre entier");
+                entreeValide = false;
+            }
+        } while (!entreeValide);
+        return grandeur;
     }
 
     private SEXE sexeAjout() {
@@ -298,6 +324,57 @@ public class Pokedex {
             }
         } while (!entreeCorrecte);
         return type_eau;
+    }
+
+    private String criAjout() {
+        System.out.println("Veuillez entrer le cri de cet animal");
+        return clavier.nextLine();
+    }
+
+    private ALIMENTATION alimentationAjout() {
+        ALIMENTATION alimentation = null;
+        boolean entreeCorrecte;
+        System.out.println("Quel est le type d'alimentation de cet animal?\n1-Carnivore\n2-Végétarien");
+        do {
+            switch (clavier.nextLine()) {
+                case "1":
+                    entreeCorrecte = true;
+                    alimentation = ALIMENTATION.CARNIVORE;
+                    break;
+                case "2":
+                    entreeCorrecte = true;
+                    alimentation = ALIMENTATION.VEGETARIEN;
+                    break;
+                default:
+                    entreeCorrecte = false;
+                    System.out.println("Cette reponse n'est pas vailde, veuillez réentrer votre choix.");
+                    break;
+            }
+        } while (!entreeCorrecte);
+        return alimentation;
+    }
+
+    private FLOTAISON flotaisonAjout() {
+        FLOTAISON flotaison = null;
+        Boolean entreeCorrecte;
+        System.out.println("La plante est-elle un flottante ou immergée?\n1-Flottante\n2-Immergée");
+        do {
+            switch (clavier.nextLine()) {
+                case "1":
+                    entreeCorrecte = true;
+                    flotaison = FLOTAISON.FLOTTANTE;
+                    break;
+                case "2":
+                    entreeCorrecte = true;
+                    flotaison = FLOTAISON.IMMERGEE;
+                    break;
+                default:
+                    entreeCorrecte = false;
+                    System.out.println("Cette reponse n'est pas vailde, veuillez réentrer votre choix.");
+                    break;
+            }
+        } while (!entreeCorrecte);
+        return flotaison;
     }
 
     private void modifierSpecimen() {
