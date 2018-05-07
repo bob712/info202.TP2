@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import pokedexMarin.Animal.SEXE;
+import pokedexMarin.Vivant.TYPE_EAU;
 import pokedexMarin.MammifereMarin.ALIMENTATION;
 import pokedexMarin.PlanteAquatique.FLOTAISON;
-import pokedexMarin.Poisson.SEXE;
-import pokedexMarin.Poisson.TYPE_EAU;
 
 /**
  *
@@ -28,7 +28,7 @@ public class Pokedex {
     private Encryption cryptage;
     private int personneIndex = -1;
     private ArrayList<Personne> personnes;
-    private ArrayList<Pokemon> pokemons;
+    private ArrayList<Specimen> pokemons;
 
     public Pokedex() {
         this.personnes = new ArrayList();
@@ -63,13 +63,13 @@ public class Pokedex {
             }
             lire.close();
             fichierOuvert = true;
-            test_AEffacer();
+
         } catch (FileNotFoundException fnfe) {
             System.out.println("Veuillez poser le fichier Personnes.txt dans le fichier du projet.");
         } catch (NumberFormatException nfe) {
-            System.out.println("La dernière position de chaque ligne du fichier personnes.txt doit contenir un nombre entier représentat l'âge de l'utilisateur.");
+            System.out.println("La dernière position de chaque ligne du fichier Personnes.txt doit contenir un nombre entier représentat l'âge de l'utilisateur.");
         } catch (IOException ioe) {
-            Logger.getLogger(Pokedex.class.getName()).log(Level.SEVERE, null, ioe);
+            System.out.println("Une erreure s'est produite lors de l'ouverture du fichier Personnes.txt.\nVeuillez vérifier la présence, le contenu et le type du fichier.");
         }
         return fichierOuvert;
     }
@@ -175,6 +175,9 @@ public class Pokedex {
     }
 
     private void consulter() {
+        for (int index = 0; index < pokemons.size(); index++) {
+            System.out.println(pokemons.get(index).getNom());
+        }
     }
 
     private void ajoutSpecimen() {
@@ -186,7 +189,7 @@ public class Pokedex {
         int grandeur;
         SEXE sexe;
         TYPE_EAU type_eau = null;
-        boolean entreeCorrecte;
+
         type = typeAjout();
         nom = nomAjout();
         date = dateAjout();
@@ -204,7 +207,10 @@ public class Pokedex {
                 pokemons.add(new PlanteAquatique(date, personnes.get(personneIndex).getCodeAcces(), quantiteTrouve, nom, couleur, grandeur, type_eauAjout(), flotaisonAjout()));
                 break;
             case "4":
-                pokemons.add(new Mineral());
+                pokemons.add(new Mineral(date, personnes.get(personneIndex).getCodeAcces(), quantiteTrouve, nom, couleur, grandeur));
+                break;
+            case "5":
+                pokemons.add(new AutreAnimal(date, personnes.get(personneIndex).getCodeAcces(), quantiteTrouve, nom, couleur, grandeur, sexeAjout(), type_eauAjout()));
                 break;
             default:
                 System.out.println("Vous êtes redirigés vers le menu");
@@ -218,6 +224,7 @@ public class Pokedex {
                 + "2-Mammifère marin\n"
                 + "3-Plante aquatique\n"
                 + "4-Minéral\n"
+                + "5-Autre animal marin\n"
                 + "autre-Je me suis trompé, je ne désire pas ajouter de créature.");
         return clavier.nextLine();
     }
@@ -437,13 +444,15 @@ public class Pokedex {
         }
     }
 
-    private Pokemon choixType() {
-        Pokemon type;
+    private Specimen choixType() {
+        Specimen type;
         System.out.println(""
                 + "1-Poisson\n"
                 + "2-Mammifère Marin\n"
                 + "3-Plante Aquatique\n"
-                + "4-Mineral");
+                + "4-Mineral\n"
+                + "5-Autre animal marin\n"
+                + "Autre-Je ne connais pas le type du specimen que je cherche.");
         switch (clavier.nextLine()) {
             case "1":
                 type = new Poisson();
@@ -457,20 +466,21 @@ public class Pokedex {
             case "4":
                 type = new Mineral();
                 break;
+            case "5":
+                type = new AutreAnimal();
+                break;
             default:
-                System.out.println("Ceci n'est pas une option valide.");
-                type = new Pokemon();
+                type = new Specimen();
+                break;
         }
         return type;
     }
 
-    private void afficherInstancesType(Pokemon type) {
+    private void afficherInstancesType(Specimen type) {
         System.out.println("Voici l'ensemble des specimens de ce type.\n");
-        if (!(type instanceof Pokemon)) {//si le choix de l'utilisateur est valide(il a choisi son type correctement)
-            for (int indexSpecimen = 0; indexSpecimen < pokemons.size(); indexSpecimen++) {
-                if (pokemons.get(indexSpecimen).getClass() == type.getClass()) {
-                    System.out.println(pokemons.get(indexSpecimen).getNom());
-                }
+        for (int indexSpecimen = 0; indexSpecimen < pokemons.size(); indexSpecimen++) {
+            if (pokemons.get(indexSpecimen).getClass() == type.getClass()) {
+                System.out.println(pokemons.get(indexSpecimen).getNom());
             }
         }
     }
@@ -534,13 +544,12 @@ public class Pokedex {
         for (int indexPokemon = 0; indexPokemon < pokemons.size(); indexPokemon++) {
             for (int indexPersonne = 0; indexPersonne < personnes.size(); indexPersonne++) {
                 if (pokemons.get(indexPokemon).getCodeAccesTrouver().equals(personnes.get(indexPersonne).getCodeAcces())) {
-                    nbEntreesPersonnes.get(indexPersonne);
-                    //nbEntreesPersonnes. ++;
+                    nbEntreesPersonnes.set(indexPersonne, (nbEntreesPersonnes.get(indexPersonne)) + 1);
                 }
             }
         }
         for (int indexPersonne = 0; indexPersonne < personnes.size(); indexPersonne++) {
-            System.out.println(personnes.get(indexPersonne) + " a enregistre " + nbEntreesPersonnes.get(indexPersonne).toString());
+            System.out.println(personnes.get(indexPersonne) + " a enregistre " + nbEntreesPersonnes.get(indexPersonne).toString() + " specimens.");
         }
 
     }
@@ -549,18 +558,5 @@ public class Pokedex {
     }
 
     private void sauvegarde() {
-    }
-
-    public void test_AEffacer() {
-        System.out.println("test");
-        System.out.println("personnes");
-        for (int i = 0; i < personnes.size(); i++) {
-            System.out.println(personnes.get(i));
-        }
-        System.out.println("pokemons");
-        for (int i = 0; i < pokemons.size(); i++) {
-            System.out.println(pokemons.get(i));
-        }
-
     }
 }

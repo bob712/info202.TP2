@@ -9,13 +9,13 @@ package pokedexMarin;
  *
  * @author 1764812
  */
-public class Mineral extends Pokemon {
+public class Mineral extends Specimen {
+
+    public Mineral() {
+    }
 
     public Mineral(String date, String nomTrouver, int quantiteTrouver, String nom, String couleur, int grandeur) {
         super(date, nomTrouver, quantiteTrouver, nom, couleur, grandeur);
     }
 
-    Mineral() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

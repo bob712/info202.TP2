@@ -9,7 +9,7 @@ package pokedexMarin;
  *
  * @author 1764812
  */
-public class Poisson extends Pokemon {
+public class Poisson extends Animal {
 
     /**
      *
@@ -17,26 +17,11 @@ public class Poisson extends Pokemon {
      * @param nomTrouver
      * @param quantiteTrouver
      */
-    private SEXE sexe;
-
     public Poisson() {
     }
 
-    public Poisson(String date, String nomTrouver, int quantiteTrouver, String nom,String couleur,int grandeur, SEXE sexe, TYPE_EAU typeEau) {
-        super(date, nomTrouver, quantiteTrouver, nom, couleur, grandeur);
-        this.sexe = sexe;
-        this.typeEau = typeEau;
+    public Poisson(String date, String nomTrouver, int quantiteTrouver, String nom, String couleur, int grandeur, SEXE sexe, TYPE_EAU typeEau) {
+        super(date, nomTrouver, quantiteTrouver, nom, couleur, grandeur, sexe, typeEau);
     }
-
-    enum SEXE {
-        MALE,
-        FEMELLE;
-    }
-
-    public enum TYPE_EAU {
-        EAU_DOUCE,
-        EAU_SALEE;
-    }
-    private TYPE_EAU typeEau;
 
 }

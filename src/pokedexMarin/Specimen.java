@@ -9,7 +9,7 @@ package pokedexMarin;
  *
  * @author 1764812
  */
-public class Pokemon {
+public class Specimen {
 
     private static int noCreation = 1;
     private String date;//changer le type de la variable?
@@ -20,14 +20,14 @@ public class Pokemon {
     private String couleur;
     private int grandeur;//grandeur en cm
 
-    public Pokemon() {
+    public Specimen() {
     }
 
-    public Pokemon(String date, String codeAccesTrouver, int quantiteTrouver, String nom, String couleur, int grandeur) {
+    public Specimen(String date, String codeAccesTrouver, int quantiteTrouver, String nom, String couleur, int grandeur) {
         this.date = date;
         this.codeAccesTrouver = codeAccesTrouver;
         this.quantiteTrouver = quantiteTrouver;
-        this.numero = Pokemon.noCreation++;
+        this.numero = Specimen.noCreation++;
         this.nom = nom;
         this.couleur = couleur;
         this.grandeur = grandeur;

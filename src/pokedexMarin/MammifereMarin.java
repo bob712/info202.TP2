@@ -9,25 +9,23 @@ package pokedexMarin;
  *
  * @author 1764812
  */
-public class MammifereMarin extends Poisson {
+public class MammifereMarin extends Animal {
 
     private ALIMENTATION alimentation;
-
-    public MammifereMarin(String date, String nomTrouver, int quantiteTrouver, String nom, String couleur, int grandeur, SEXE sexe, TYPE_EAU typeEau, String cri, ALIMENTATION alimentation) {
-        super(date, nomTrouver, quantiteTrouver, nom, couleur, grandeur, sexe, typeEau);
-        this.cri = cri;
-        this.alimentation = alimentation;
-    }
-
-    MammifereMarin() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    private String cri = "aucun cri précisé";
 
     public enum ALIMENTATION {
         CARNIVORE,
         VEGETARIEN;
     }
 
-    private String cri = "";
+    public MammifereMarin() {
+    }
+
+    public MammifereMarin(String date, String nomTrouver, int quantiteTrouver, String nom, String couleur, int grandeur, SEXE sexe, TYPE_EAU typeEau, String cri, ALIMENTATION alimentation) {
+        super(date, nomTrouver, quantiteTrouver, nom, couleur, grandeur, sexe, typeEau);
+        this.cri = cri;
+        this.alimentation = alimentation;
+    }
 
 }
