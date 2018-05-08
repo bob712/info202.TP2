@@ -6,9 +6,13 @@
 package pokedexMarin;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -44,7 +48,7 @@ public class Pokedex {
         }
     }
 
-    public int getPersonneIndex() {
+    public int getPersonneIndex() {//effacer?
         return personneIndex;
     }
 
@@ -83,8 +87,9 @@ public class Pokedex {
         System.out.println("Veuillez entrer votre nom d'usager.");
         codeAcces = clavier.nextLine();
 
-        ligne = 0;
+        ligne = -1;
         while (ligne < this.personnes.size() && !utilisateurTrouve) {
+            ligne++;
             if ((codeAcces).equals(this.personnes.get(ligne).getCodeAcces())) {
                 utilisateurTrouve = true;
                 //cheker mot de passe
@@ -113,7 +118,7 @@ public class Pokedex {
                 } else {
                 }
             }
-            ligne++;
+
         }
         if (!utilisateurTrouve) {
             System.out.println("Ce nom d'utilisateur n'existe pas. Voulez-vous quitter le Pokedex Marin? (Oui/Non) ");
@@ -198,7 +203,9 @@ public class Pokedex {
         grandeur = grandeurAjout();
         switch (type) {
             case "1":
-                pokemons.add(new Poisson(date, personnes.get(personneIndex).getCodeAcces(), quantiteTrouve, nom, couleur, grandeur, sexeAjout(), type_eauAjout()));
+                pokemons.add(new Poisson(date,
+                        personnes.get(personneIndex).getCodeAcces(),
+                        quantiteTrouve, nom, couleur, grandeur, sexeAjout(), type_eauAjout()));
                 break;
             case "2":
                 pokemons.add(new MammifereMarin(date, personnes.get(personneIndex).getCodeAcces(), quantiteTrouve, nom, couleur, grandeur, sexeAjout(), type_eauAjout(), criAjout(), alimentationAjout()));
@@ -543,7 +550,7 @@ public class Pokedex {
 
         for (int indexPokemon = 0; indexPokemon < pokemons.size(); indexPokemon++) {
             for (int indexPersonne = 0; indexPersonne < personnes.size(); indexPersonne++) {
-                if (pokemons.get(indexPokemon).getCodeAccesTrouver().equals(personnes.get(indexPersonne).getCodeAcces())) {
+                if ((pokemons.get(indexPokemon).getCodeAccesTrouver()).equals(personnes.get(indexPersonne).getCodeAcces())) {
                     nbEntreesPersonnes.set(indexPersonne, (nbEntreesPersonnes.get(indexPersonne)) + 1);
                 }
             }
@@ -558,5 +565,29 @@ public class Pokedex {
     }
 
     private void sauvegarde() {
+        try {
+            ObjectOutputStream ecrire = new ObjectOutputStream(new FileOutputStream("pokedex.bin"));
+            ecrire.writeObject(pokemons);
+            ecrire.flush();
+            ecrire.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Pokedex.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Pokedex.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void ouvertureBinaire() {
+        try {
+            ObjectInputStream lire = new ObjectInputStream(new FileInputStream("pokedex.bin"));
+            pokemons = (ArrayList<Specimen>) lire.readObject();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Pokedex.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Pokedex.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Pokedex.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
