@@ -17,7 +17,9 @@ public class TP2 {
     public static void main(String[] args) {
         Pokedex pokedex = new Pokedex();
         if (pokedex.getPersonneIndex() != -1) {
+            pokedex.ouvertureBinaire();
             pokedex.menu();
+            pokedex.sauvegardeBinaire();
         }
     }
 

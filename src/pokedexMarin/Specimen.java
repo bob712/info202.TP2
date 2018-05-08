@@ -5,11 +5,13 @@
  */
 package pokedexMarin;
 
+import java.io.Serializable;
+
 /**
  *
  * @author 1764812
  */
-public class Specimen {
+public class Specimen implements Serializable {
 
     private static int noCreation = 1;
     private String date;//changer le type de la variable?
@@ -31,11 +33,6 @@ public class Specimen {
         this.nom = nom;
         this.couleur = couleur;
         this.grandeur = grandeur;
-    }
-
-    @Override
-    public String toString() {
-        return nom;
     }
 
     public void setQuantiteTrouver(int quantiteTrouver) {

@@ -170,7 +170,6 @@ public class Pokedex {
                 Statistiques();
                 break;
             case "5":
-                sauvegarde();
                 quitter = true;
                 break;
         }
@@ -179,7 +178,7 @@ public class Pokedex {
         }
     }
 
-    private void consulter() {
+    private void consulter() {//pas fini
         for (int index = 0; index < pokemons.size(); index++) {
             System.out.println(pokemons.get(index).getNom());
         }
@@ -564,7 +563,7 @@ public class Pokedex {
     private void afficherInformationsPersonnes() {
     }
 
-    private void sauvegarde() {
+    public void sauvegardeBinaire() {
         try {
             ObjectOutputStream ecrire = new ObjectOutputStream(new FileOutputStream("pokedex.bin"));
             ecrire.writeObject(pokemons);
@@ -578,7 +577,7 @@ public class Pokedex {
 
     }
 
-    private void ouvertureBinaire() {
+    public void ouvertureBinaire() {
         try {
             ObjectInputStream lire = new ObjectInputStream(new FileInputStream("pokedex.bin"));
             pokemons = (ArrayList<Specimen>) lire.readObject();

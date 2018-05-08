@@ -57,8 +57,7 @@ public class Personne {
 
     @Override
     public String toString() {
-        return "Personne{" + "nom=" + nom + ", codeAcces=" + codeAcces + ", motDePasse=" + motDePasse + ", age=" + age + '}';
+        return "Personne{" + "nom:" + nom + ", codeAcces:" + codeAcces + ", age:" + age + "ans}";
     }
 
-    
 }
